@@ -35,3 +35,5 @@ if user_prompt:
 
     print(completion)
     st.write(completion)
+
+    
