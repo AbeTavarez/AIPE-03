@@ -29,7 +29,8 @@ with st.sidebar:
         print("FILE UPLOADED: ", csv_file[:1])
 # ==============================================
 
-# Prompt Template
+#: TODO: Update the Prompt Template with your prompt. 
+# Don't forget to keep the {question} and {context} placeholders
 prompt_template = PromptTemplate.from_template(
     """
     Answer this question: {question} 
