@@ -2,10 +2,9 @@ from langchain_groq import ChatGroq
 from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import PromptTemplate
 from langchain_community.document_loaders.csv_loader import CSVLoader
-
-from dotenv import load_dotenv
 import streamlit as st
 
+from dotenv import load_dotenv
 load_dotenv()
 
 # ======= UI with Streamlit =====================
@@ -24,6 +23,7 @@ with st.sidebar:
 
     if csv_file_path is not None:
         # https://python.langchain.com/docs/how_to/document_loader_csv/
+        
         csv_loader = CSVLoader(file_path=csv_file_path.name)
         csv_file = csv_loader.load()
         print("FILE UPLOADED: ", csv_file[:1])
@@ -31,7 +31,10 @@ with st.sidebar:
 
 # Prompt Template
 prompt_template = PromptTemplate.from_template(
-    "answer this question: {question} based on the context: {context}"
+    """
+    Answer this question: {question} 
+    based on the context: {context}
+    """
 )
 
 
@@ -50,15 +53,15 @@ if st.button("Submit"):
             llama_response = llama_chain.invoke(
                 {"question": question, "context": csv_file}
             )
-        gpt_response = gpt_chain.invoke({"question": question, "context": csv_file})
+            gpt_response = gpt_chain.invoke({"question": question, "context": csv_file})
 
-        st.markdown("#### Llama Response")
-        st.write(llama_response)
+            st.markdown("#### Llama Response")
+            st.write(llama_response)
 
-        st.divider()
+            st.divider()
 
-        st.markdown("#### GPT Response")
-        st.write(gpt_response)
+            st.markdown("#### GPT Response")
+            st.write(gpt_response)
 
     else:
         st.warning("Please upload a CSV file first.")
